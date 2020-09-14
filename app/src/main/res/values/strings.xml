@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TestUserAdmin</string>
+    <string name="login">login</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="register">register</string>
+    <string name="email">email</string>
+    <string name="re_type_password">re-type password</string>
+    <string name="home">HOME</string>
+    <string name="produk">PRODUK</string>
+    <string name="profile">PROFILE</string>
+    <string name="item_name">item name</string>
+    <string name="item_price">item price</string>
+    <string name="beli">BELI</string>
+</resources>
