@@ -39,13 +39,8 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     fun doLogin(u : String, p : String){
-        val retrofit = Retrofit.Builder()
-            .baseUrl(Const.baseUrl)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        val apiAccess = retrofit.create(APIServices::class.java)
-        apiAccess.userLogin(u, p)
+            MethodHelpers.doRetrofitExecute()
+            .userLogin(u, p)
             .enqueue(object : Callback<UserResponse>{
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                 t.printStackTrace()

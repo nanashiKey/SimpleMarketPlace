@@ -12,4 +12,5 @@
     <string name="item_name">item name</string>
     <string name="item_price">item price</string>
     <string name="beli">BELI</string>
+    <string name="tukar_point">tukar point</string>
 </resources>
