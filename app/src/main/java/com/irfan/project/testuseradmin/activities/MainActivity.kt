@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setHomeButtonEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+        supportActionBar!!.setDisplayShowHomeEnabled(false)
         /**
          * set up navigation controller to bootmbar
          */

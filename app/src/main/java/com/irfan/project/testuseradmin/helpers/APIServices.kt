@@ -2,6 +2,7 @@ package com.irfan.project.testuseradmin.helpers
 
 import com.irfan.project.testuseradmin.models.BarangResponse
 import com.irfan.project.testuseradmin.models.DefaultResponse
+import com.irfan.project.testuseradmin.models.HadiahResponse
 import com.irfan.project.testuseradmin.models.UserResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -86,4 +87,24 @@ interface APIServices {
     @FormUrlEncoded
     @POST("deletebarang")
     fun deleteBarang(@Field("id") id : Int) : Call<DefaultResponse>
+
+    /**
+     * getAllHadiah
+     */
+    @GET("getallhadiah")
+    fun getAllHadiah() : Call<HadiahResponse>
+
+    /**
+     * uploadHadiah
+     * @param namahadiah
+     * @param point
+     * @param banyakitem
+     */
+    @FormUrlEncoded
+    @POST("uploadhadiah")
+    fun uploadHadiah(
+        @Field("namahadiah") namaHadiah : String,
+        @Field("point") point : Int,
+        @Field("banyakitem") banyakItem : Int
+    ) : Call<DefaultResponse>
 }

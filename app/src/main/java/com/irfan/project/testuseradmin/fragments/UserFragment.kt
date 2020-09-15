@@ -21,4 +21,8 @@ class UserFragment : Fragment() {
         val v = inflater.inflate(R.layout.fragment_users, container, false)
         return v
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 }

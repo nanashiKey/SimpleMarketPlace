@@ -40,6 +40,7 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         holder.tvItemName.text = barang.namabarang
         val harga = MethodHelpers.changeCurrencytoIDR(barang.hargabarang)
         holder.tvItemPrice.text = harga
+        holder.tvItemStock.text = "stock : ${barang.stock}"
         holder.btnBeli.setOnClickListener {
             MethodHelpers.showShortToast(ctx, barang.namabarang)
         }
@@ -51,12 +52,14 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         var imgMarket : ImageView
         var tvItemName : TextView
         var tvItemPrice : TextView
+        var tvItemStock : TextView
         var btnBeli : Button
         init {
             llayout = itemView.findViewById(R.id.llayout)
             imgMarket = itemView.findViewById(R.id.imgMarket)
             tvItemName = itemView.findViewById(R.id.tvItemName)
             tvItemPrice = itemView.findViewById(R.id.tvItemPrice)
+            tvItemStock = itemView.findViewById(R.id.tvItemStock)
             btnBeli = itemView.findViewById(R.id.btnBeli)
         }
     }

@@ -4,7 +4,7 @@
         android:title="@string/home"
         android:icon="@drawable/ic_home"/>
     <item android:id="@+id/product"
-        android:title="@string/produk"
+        android:title="@string/hadiah"
         android:icon="@drawable/ic_market"/>
     <item android:id="@+id/profile"
         android:title="@string/profile"

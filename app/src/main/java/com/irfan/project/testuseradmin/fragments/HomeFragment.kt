@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.irfan.project.testuseradmin.R
 import com.irfan.project.testuseradmin.adapters.BarangAdapter
 import com.irfan.project.testuseradmin.models.Barang
@@ -25,6 +26,7 @@ class HomeFragment : Fragment() {
     lateinit var rcView : RecyclerView
     lateinit var layoutmanager: LinearLayoutManager
     lateinit var barangAdapter : BarangAdapter
+    lateinit var fab : FloatingActionButton
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,6 +34,7 @@ class HomeFragment : Fragment() {
     ): View? {
         val v = inflater.inflate(R.layout.fragment_home, container, false)
         rcView = v.findViewById(R.id.rcView)
+        fab = v.findViewById(R.id.floatingActionButton)
         return v
     }
 
