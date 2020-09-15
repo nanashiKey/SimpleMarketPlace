@@ -14,4 +14,12 @@
     <string name="beli">BELI</string>
     <string name="tukar_point">tukar point</string>
     <string name="hadiah">Hadiah</string>
+    <string name="nama_barang">Nama Barang</string>
+    <string name="harga_barang">Harga Barang</string>
+    <string name="stock">Stock</string>
+    <string name="upload">upload</string>
+    <string name="cancel">cancel</string>
+    <string name="nama_hadiah">nama hadiah</string>
+    <string name="point_untuk_ditukar">point untuk ditukar</string>
+    <string name="banyak_item">banyak item</string>
 </resources>
