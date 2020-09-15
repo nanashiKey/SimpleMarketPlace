@@ -5,15 +5,11 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.irfan.project.testuseradmin.fragments.HomeFragment"
-        android:label="HomeFragment" >
-    </fragment>
+        android:name="com.irfan.project.testuseradmin.fragments.HomeFragment"></fragment>
     <fragment
         android:id="@+id/product"
-        android:name="com.irfan.project.testuseradmin.fragments.HadiahFragment"
-        android:label="HadiahFragment" />
+        android:name="com.irfan.project.testuseradmin.fragments.HadiahFragment" />
     <fragment
         android:id="@+id/profile"
-        android:name="com.irfan.project.testuseradmin.fragments.UserFragment"
-        android:label="UserFragment" />
+        android:name="com.irfan.project.testuseradmin.fragments.UserFragment" />
 </navigation>

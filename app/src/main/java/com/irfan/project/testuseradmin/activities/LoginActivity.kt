@@ -7,6 +7,7 @@ import com.irfan.project.testuseradmin.R
 import com.irfan.project.testuseradmin.helpers.APIServices
 import com.irfan.project.testuseradmin.helpers.Const
 import com.irfan.project.testuseradmin.helpers.MethodHelpers
+import com.irfan.project.testuseradmin.helpers.PrefsHelper
 import com.irfan.project.testuseradmin.models.UserResponse
 import kotlinx.android.synthetic.main.activity_login.*
 import org.json.JSONObject
@@ -25,6 +26,12 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        val statusLogin = PrefsHelper(this@LoginActivity).getLoginStat()
+        if(statusLogin){
+            MethodHelpers.goTo(this@LoginActivity, MainActivity::class.java)
+            finish()
+        }
         btnLogin.setOnClickListener {
             val username = etUsername.text.toString()
             val pass = etPassword.text.toString()
@@ -51,8 +58,11 @@ class LoginActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val bodyres = response.body()
                     if(bodyres != null){
+                        PrefsHelper(this@LoginActivity).saveUserDetail(bodyres.data!!.get(0))
+                        PrefsHelper(this@LoginActivity).setLoginStat(true)
                         MethodHelpers.showShortToast(this@LoginActivity, bodyres.message!!)
                         MethodHelpers.goTo(this@LoginActivity, MainActivity::class.java)
+                        finish()
                     }else{
                         MethodHelpers.showShortToast(this@LoginActivity, response.message())
                     }
