@@ -28,11 +28,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.setHomeButtonEnabled(false)
         supportActionBar!!.setDisplayHomeAsUpEnabled(false)
         supportActionBar!!.setDisplayShowHomeEnabled(false)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
         /**
          * set up navigation controller to bootmbar
          */
         MethodHelpers.setWindowsBar(this@MainActivity, R.color.colorPrimaryDark)
         NavigationUI.setupActionBarWithNavController(this, navigationController)
+
         botomNav.setupWithNavController(navigationController)
 
         val username = PrefsHelper(this@MainActivity).getUserName()

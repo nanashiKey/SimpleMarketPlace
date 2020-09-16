@@ -1,9 +1,11 @@
 package com.irfan.project.testuseradmin.adapters
 
+import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -11,6 +13,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.irfan.project.testuseradmin.R
 import com.irfan.project.testuseradmin.helpers.MethodHelpers
+import com.irfan.project.testuseradmin.helpers.PrefsHelper
 import com.irfan.project.testuseradmin.models.Barang
 
 
@@ -42,10 +45,48 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         holder.tvItemPrice.text = harga
         holder.tvItemStock.text = "stock : ${barang.stock}"
         holder.btnBeli.setOnClickListener {
-            MethodHelpers.showShortToast(ctx, barang.namabarang)
+            val dialog = Dialog(ctx)
+            dialog.setContentView(R.layout.pop_beliitems)
+            dialog.setCancelable(false)
+            dialog.window!!.setLayout(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.WRAP_CONTENT )
+            val btnBeli : Button = dialog.findViewById(R.id.btnBeli)
+            val btnCancel : Button = dialog.findViewById(R.id.btnCancel)
+            btnBeli.setOnClickListener {
+                MethodHelpers.showShortToast(ctx, barang.namabarang)
+                dialog.dismiss()
+            }
+            btnCancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
         }
 
+        val id = PrefsHelper(ctx).getUserID()
+        if(id == 1){
+            holder.llayout.setOnLongClickListener(object : View.OnLongClickListener{
+                override fun onLongClick(p0: View?): Boolean {
+                    val dialog = Dialog(ctx)
+                    dialog.setContentView(R.layout.pop_updel)
+                    dialog.window!!.setLayout(
+                        WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.WRAP_CONTENT )
+                    val btnUpdate : Button = dialog.findViewById(R.id.btnUpdate)
+                    val btnDel : Button = dialog.findViewById(R.id.btnDel)
+                    btnUpdate.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    btnDel.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
+                    return true
+                }
+            })
+        }
     }
+
 
     class BarangViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         var llayout : LinearLayout
@@ -63,4 +104,5 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
             btnBeli = itemView.findViewById(R.id.btnBeli)
         }
     }
+
 }

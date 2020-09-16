@@ -52,14 +52,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        layoutmanager = GridLayoutManager(requireActivity().applicationContext, 2)
+//        layoutmanager = GridLayoutManager(requireActivity().applicationContext, 2)
+        layoutmanager = LinearLayoutManager(requireContext())
         rcView.setHasFixedSize(true)
         rcView.layoutManager = layoutmanager
         barangAdapter = BarangAdapter()
         val modelizedata = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         modelizedata.dataExecute.observe(requireActivity(), Observer<ArrayList<Barang>>{
-            barangAdapter = BarangAdapter(requireActivity().applicationContext, it)
+            barangAdapter = BarangAdapter(requireActivity(), it)
             rcView.adapter = barangAdapter
         })
 

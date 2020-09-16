@@ -22,4 +22,9 @@
     <string name="nama_hadiah">nama hadiah</string>
     <string name="point_untuk_ditukar">point untuk ditukar</string>
     <string name="banyak_item">banyak item</string>
+    <string name="update">Update</string>
+    <string name="delete">delete</string>
+    <string name="log_out">log out</string>
+    <string name="really">Yakin Membeli Item ini ?</string>
+    <string name="pilih_action">Pilih Action</string>
 </resources>

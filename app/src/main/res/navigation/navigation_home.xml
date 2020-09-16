@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_home"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_home"
     app:startDestination="@id/home">
 
     <fragment
         android:id="@+id/home"
-        android:name="com.irfan.project.testuseradmin.fragments.HomeFragment"></fragment>
+        android:name="com.irfan.project.testuseradmin.fragments.HomeFragment"/>
     <fragment
         android:id="@+id/product"
         android:name="com.irfan.project.testuseradmin.fragments.HadiahFragment" />
