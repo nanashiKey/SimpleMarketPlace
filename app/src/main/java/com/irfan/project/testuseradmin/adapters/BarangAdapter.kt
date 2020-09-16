@@ -87,6 +87,7 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
                         dialog.dismiss()
                     }
                     btnDel.setOnClickListener {
+                        doDelete(barang.id)
                         dialog.dismiss()
                     }
                     dialog.show()
@@ -158,7 +159,7 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         etnamaBarang.setText(barang.namabarang)
         etHargaBarang.setText(barang.hargabarang.toString())
         etStock.setText(barang.stock.toString())
-
+        btnUpload.text = "UPDATE"
         btnCancel.setOnClickListener {
             dialog.dismiss()
         }
@@ -196,5 +197,31 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         }
 
         dialog.show()
+    }
+
+    fun doDelete(id : Int){
+        val executedata = MethodHelpers.doRetrofitExecute()
+        executedata.deleteBarang(id).enqueue(object : Callback<DefaultResponse>{
+            override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                e("TAGERROR", t.message!!)
+                t.printStackTrace()
+            }
+
+            override fun onResponse(
+                call: Call<DefaultResponse>,
+                response: Response<DefaultResponse>
+            ) {
+                if(response.isSuccessful){
+                    MethodHelpers.showShortToast(ctx, response.body()!!.message)
+                    ctx.startActivity(Intent(ctx, MainActivity::class.java))
+                    (ctx as Activity).finish()
+                    (ctx as Activity).overridePendingTransition(0,0)
+                }else{
+                    val jsonObj = JSONObject(response.errorBody()!!.string())
+                    MethodHelpers.showShortToast(ctx, jsonObj.getString("message"))
+                }
+            }
+
+        })
     }
 }

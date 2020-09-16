@@ -145,5 +145,27 @@ interface APIServices {
         @Field("userid") userid : Int
     ) : Call<DefaultResponse>
 
+    /**
+     * updateHadiah
+     * @path id
+     * @param namahadiah
+     * @param point
+     * @param banyakitem
+     */
+    @FormUrlEncoded
+    @POST("hadiah/{id}")
+    fun updateHadiah(
+        @Path("id") id : Int,
+        @Field("namahadiah") namahadiah : String,
+        @Field("point") point : Int,
+        @Field("banyakitem") banyakitem : Int
+    ) : Call<DefaultResponse>
 
+    /**
+     * deleteHadiah
+     * @path id
+     */
+    @FormUrlEncoded
+    @POST("delhadiah/{id}")
+    fun delHadiah( @Path("id") id : Int) : Call<DefaultResponse>
 }
