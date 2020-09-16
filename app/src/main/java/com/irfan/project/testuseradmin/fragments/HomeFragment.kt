@@ -103,6 +103,7 @@ class HomeFragment : Fragment() {
                         if(response.isSuccessful){
                             requireActivity().startActivity(requireActivity().intent)
                             requireActivity().finish()
+                            requireActivity().overridePendingTransition(0,0)
                             MethodHelpers.showShortToast(requireActivity(), response.body()!!.message)
                             dialog.dismiss()
                         }else{

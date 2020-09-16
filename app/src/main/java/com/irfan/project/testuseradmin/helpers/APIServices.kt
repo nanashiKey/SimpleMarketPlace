@@ -71,7 +71,6 @@ interface APIServices {
      * @param hargabarang
      * @param stock
      */
-
     @FormUrlEncoded
     @POST("uploadbarang")
     fun uploadBarang(
@@ -81,12 +80,38 @@ interface APIServices {
     ) : Call<DefaultResponse>
 
     /**
-     * deletebarang
+     * deleteBarang
      * @param id
      */
     @FormUrlEncoded
     @POST("deletebarang")
     fun deleteBarang(@Field("id") id : Int) : Call<DefaultResponse>
+
+    /**
+     * beliBarang
+     * @param userid
+     * @param barangid
+     */
+    @FormUrlEncoded
+    @POST("beli")
+    fun beliBarang(@Field("userid") usrid : Int,
+                   @Field("barangid") barangid : Int) : Call<DefaultResponse>
+
+    /**
+     * updateBarang
+     * @path id
+     * @param namabarang
+     * @param hargabarang
+     * @param stock
+     */
+    @FormUrlEncoded
+    @POST("barang/{id}")
+    fun updateBarang(
+        @Path("id") id : Int,
+        @Field("namabarang") namaBarang : String,
+        @Field("hargabarang") harga : Double,
+        @Field("stock") stock : Int
+    ) : Call<DefaultResponse>
 
     /**
      * getAllHadiah
@@ -107,4 +132,18 @@ interface APIServices {
         @Field("point") point : Int,
         @Field("banyakitem") banyakItem : Int
     ) : Call<DefaultResponse>
+
+    /**
+     * redeemedHadiah
+     * @param hadiahid
+     * @param userid
+     */
+    @FormUrlEncoded
+    @POST("redeemed")
+    fun redeemedHadiah(
+        @Field("hadiahid") hadiahId : Int,
+        @Field("userid") userid : Int
+    ) : Call<DefaultResponse>
+
+
 }

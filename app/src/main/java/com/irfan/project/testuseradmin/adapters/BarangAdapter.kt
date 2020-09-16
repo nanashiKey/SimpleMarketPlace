@@ -1,20 +1,28 @@
 package com.irfan.project.testuseradmin.adapters
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
+import android.util.Log
+import android.util.Log.e
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.irfan.project.testuseradmin.R
+import com.irfan.project.testuseradmin.activities.MainActivity
 import com.irfan.project.testuseradmin.helpers.MethodHelpers
 import com.irfan.project.testuseradmin.helpers.PrefsHelper
 import com.irfan.project.testuseradmin.models.Barang
+import com.irfan.project.testuseradmin.models.DefaultResponse
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 /**
@@ -54,7 +62,7 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
             val btnBeli : Button = dialog.findViewById(R.id.btnBeli)
             val btnCancel : Button = dialog.findViewById(R.id.btnCancel)
             btnBeli.setOnClickListener {
-                MethodHelpers.showShortToast(ctx, barang.namabarang)
+                beliItem(barang.id)
                 dialog.dismiss()
             }
             btnCancel.setOnClickListener {
@@ -75,6 +83,7 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
                     val btnUpdate : Button = dialog.findViewById(R.id.btnUpdate)
                     val btnDel : Button = dialog.findViewById(R.id.btnDel)
                     btnUpdate.setOnClickListener {
+                        doUpdate(barang)
                         dialog.dismiss()
                     }
                     btnDel.setOnClickListener {
@@ -87,6 +96,35 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         }
     }
 
+    fun beliItem(itemid : Int){
+        val executeData = MethodHelpers.doRetrofitExecute().beliBarang(
+            PrefsHelper(ctx).getUserID(),
+            itemid)
+        executeData.enqueue(object : Callback<DefaultResponse>{
+            override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                e("TAGERROR", t.message!!)
+                t.printStackTrace()
+            }
+
+            override fun onResponse(
+                call: Call<DefaultResponse>,
+                response: Response<DefaultResponse>
+            ) {
+                if(response.isSuccessful){
+                    MethodHelpers.showShortToast(ctx, response.body()!!.message)
+                    val point  = PrefsHelper(ctx).getUserPoint()
+                    PrefsHelper(ctx).setUserPoint(point + 5)
+                    ctx.startActivity(Intent(ctx, MainActivity::class.java))
+                    (ctx as Activity).finish()
+                    (ctx as Activity).overridePendingTransition(0,0)
+                }else{
+                    val jsonObj = JSONObject(response.errorBody()!!.string())
+                    MethodHelpers.showShortToast(ctx, jsonObj.getString("message"))
+                }
+            }
+
+        })
+    }
 
     class BarangViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         var llayout : LinearLayout
@@ -105,4 +143,58 @@ class BarangAdapter : RecyclerView.Adapter<BarangAdapter.BarangViewHolder>{
         }
     }
 
+    fun doUpdate(barang : Barang){
+        val dialog = Dialog(ctx)
+        dialog.setContentView(R.layout.pop_uploadbarang)
+        dialog.setCancelable(false)
+        dialog.window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT )
+        val etnamaBarang : EditText = dialog.findViewById(R.id.etNamaBarang)
+        val etHargaBarang : EditText = dialog.findViewById(R.id.etHargaBarang)
+        val etStock : EditText = dialog.findViewById(R.id.etStock)
+        val btnUpload : Button = dialog.findViewById(R.id.btnUploadB)
+        val btnCancel : Button = dialog.findViewById(R.id.btnCancel)
+        etnamaBarang.setText(barang.namabarang)
+        etHargaBarang.setText(barang.hargabarang.toString())
+        etStock.setText(barang.stock.toString())
+
+        btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        btnUpload.setOnClickListener {
+            val executedata = MethodHelpers.doRetrofitExecute()
+            executedata.updateBarang(
+                barang.id,
+                etnamaBarang.text.toString(),
+                etHargaBarang.text.toString().toDouble(),
+                etStock.text.toString().toInt()
+            ).enqueue(object : Callback<DefaultResponse> {
+                override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+                    t.printStackTrace()
+                    Log.e("TAGERROR", t.message!!)
+                }
+
+                override fun onResponse(
+                    call: Call<DefaultResponse>,
+                    response: Response<DefaultResponse>
+                ) {
+                    if(response.isSuccessful){
+                        ctx.startActivity(Intent(ctx, MainActivity::class.java))
+                        (ctx as Activity).finish()
+                        (ctx as Activity).overridePendingTransition(0,0)
+                        MethodHelpers.showShortToast(ctx, response.body()!!.message)
+                        dialog.dismiss()
+                    }else{
+                        val jsonObj = JSONObject(response.errorBody()!!.string())
+                        MethodHelpers.showShortToast(ctx, jsonObj.getString("message"))
+                        dialog.dismiss()
+                    }
+                }
+
+            })
+        }
+
+        dialog.show()
+    }
 }
