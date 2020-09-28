@@ -7,6 +7,6 @@ package com.irfan.project.testuseradmin.helpers
  **/
 class Const {
     companion object{
-        val baseUrl ="http://192.168.0.5:8080/"
+        val baseUrl ="http://simplesample.ngopidevteam.com/"
     }
 }
